@@ -1,0 +1,11 @@
+*.mat
+*.log
+*.gz
+*.aux
+*.bbl
+*.db
+*.db-shm
+*.db-wal
+*.blg
+*.pt
+__pycache__/
