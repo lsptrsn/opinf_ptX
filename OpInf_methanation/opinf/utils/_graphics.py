@@ -100,14 +100,19 @@ def _fix_pgf_mathdefault(filepath):
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content.replace(r'\mathdefault', ''))
 
-def _save_and_fix(fig, name, folder='./results/figures/', formats=['pgf']):
+def _save_and_fix(fig, name, folder='./results/figures/', formats=None):
     """
     Saves the figure in the specified formats.
-
-    Note on PGF format: For heatmaps (imshow/pcolormesh), Matplotlib automatically
-    generates supplementary -imgX.png files in the target directory. These are
-    required by the PGF file to render properly in LaTeX. Do not delete them.
+    Automatically ensures that a PDF is generated whenever a PGF is requested.
     """
+    # Vermeidet den Python-Anti-Pattern eines veränderbaren Standardarguments (Liste)
+    if formats is None:
+        formats = ['pgf', 'pdf']
+
+    # Der eigentliche Trick: Wenn 'pgf' in der Liste ist, erzwingen wir auch 'pdf'
+    if 'pgf' in formats and 'pdf' not in formats:
+        formats.append('pdf')
+
     os.makedirs(folder, exist_ok=True)
 
     # Clean the filename to ensure cross-platform compatibility
