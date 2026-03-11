@@ -9,6 +9,10 @@ We demonstrate the approach using real-world data from a pilot-scale Power-to-X 
 
 Overall, the results highlight the potential of structured data-driven modeling to bridge physical interpretability and real-time process optimization.
 
+## Data Availability
+- **Experimental Data:** The experimental dataset used in this project is publicly available and must be downloaded separately. You can find the data at: [https://doi.org/10.17617/3.TGDEAU](https://doi.org/10.17617/3.TGDEAU).
+- **Synthetic Data:** The synthetic APRBS (Amplitude Pseudo-Random Binary Sequence) data discussed in the manuscript is not included in this public repository. If you are interested in accessing the synthetic data, please reach out to the corresponding author.
+
 ## Repository Structure
 
 ```text
@@ -39,12 +43,17 @@ conda env create -f environment.yml
 conda activate opinf
 
 ## Getting Started
-1. Data Preparation: Before running the main inference script, the raw data must be processed.
-Navigate to the data/exp_data and data/smooth_aprbs directories and run the respective data preparation scripts located there. This step extracts, formats, and saves the required .npy files (e.g., flow rate, temperature, time, and inputs).
 
-2. Configuration: All relevant hyperparameters and experimental settings are managed centrally in opinf/parameters.py. By default, the parameters are pre-configured to replicate the first experimental run detailed in the manuscript.
+1. **Data Preparation:** Before running the main inference script, the raw experimental data must be downloaded and processed. 
+   - Download the experimental `.xlsx` dataset from [https://doi.org/10.17617/3.TGDEAU](https://doi.org/10.17617/3.TGDEAU).
+   - Place the downloaded dataset into the `data/exp_data/` directory.
+   - Navigate to the `data/exp_data/` directory and run the data preparation script (`exp_data.py`). This step extracts, formats, and saves the required `.npy` files (e.g., flow rate, temperature, time, and inputs) needed for the Operator Inference.
 
-3. Running the Main Pipeline: Once the data is generated and the parameters are set, you can execute the main script from the OpInf_methanation root directory. The script will automatically handle basis generation, lifting, model training, simulation, and plotting.
+2. **Configuration:** All relevant hyperparameters and experimental settings are managed centrally in `opinf/parameters.py`. By default, the parameters are pre-configured to replicate the first experimental run detailed in the manuscript.
+
+3. **Running the Main Pipeline:** Once the data is generated and the parameters are set, you can execute the main script from the `OpInf_methanation` root directory:
+   ```bash
+   python opinf_methanation_exp.py
 
 
 
