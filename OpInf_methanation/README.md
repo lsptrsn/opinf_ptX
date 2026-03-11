@@ -33,7 +33,7 @@ OpInf_methanation/
 ├── opinf_methanation_exp.py    # Main execution pipeline
 ├── environment.yml             # Conda environment definition
 └── README.md                   # This file
-
+```
 
 ## Dependencies
 This project uses a Conda environment to manage dependencies. You can recreate the exact environment required to run the code using the provided `environment.yml` file.
@@ -41,6 +41,7 @@ This project uses a Conda environment to manage dependencies. You can recreate t
 ```bash
 conda env create -f environment.yml
 conda activate opinf
+```
 
 ## Getting Started
 
@@ -54,6 +55,7 @@ conda activate opinf
 3. **Running the Main Pipeline:** Once the data is generated and the parameters are set, you can execute the main script from the `OpInf_methanation` root directory:
    ```bash
    python opinf_methanation_exp.py
+   ```
 
 
 

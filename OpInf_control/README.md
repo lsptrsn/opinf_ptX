@@ -18,7 +18,7 @@ OpInf_control/
 ├── optimal_control_main.py     # Main execution script for the optimal control problem
 ├── environment.yml             # Conda environment definition
 └── README.md                   # This file
-
+```
 
 ## Dependencies
 This project uses a Conda environment to manage dependencies. You can recreate the exact environment required to run the code using the provided `environment.yml` file.
@@ -26,6 +26,7 @@ This project uses a Conda environment to manage dependencies. You can recreate t
 ```bash
 conda env create -f environment.yml
 conda activate control
+```
 
 ## Getting Started
 
@@ -43,6 +44,4 @@ Once your environment is set up and your configuration is to your liking, execut
 
 ```bash
 python optimal_control_main.py
-
-
-
+```
