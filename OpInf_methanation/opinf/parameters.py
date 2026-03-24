@@ -30,7 +30,7 @@ class Params(metaclass=Singleton):
     # data processing
     reduced_scaling: bool = True
     true_derivatives: bool = False
-    state_scaling: bool = 'simple' # min-max, simple, none
+    state_scaling: str = 'simple' # min-max, simple, none
     state_shifting: str ='mean' # max, mean, none, steady-state
     input_scaling: bool = True
 
@@ -79,20 +79,21 @@ class Params(metaclass=Singleton):
     # ROM size
     tolerance: float = 1e-3
     energy_threshold_single: float = 0.9922563283170605
-    thresholds: np.ndarray = field(
-        default_factory=lambda: np.arange(0.99, 0.99991, 1))
-    r_F: int = 2  # basis size for conversion
-    r_T: int = 6  # basis size for temperature
-    ROM_order: int = 8  # summed up order of the reduced system
-    input_dim: int = 3  # dimension of the control
+    thresholds: np.ndarray = field(default_factory=lambda: np.arange(0.99, 0.99991, 1))
+    r_F: int = 0
+    r_T: int = 0
+    r_w1: int = 0
+    r_w2: int = 0
+    ROM_order: int = 0
+    input_dim: int = 0
 
     # saving and plotting
     save_results: bool = False
     output: bool = False
 
     # fitting
-    batch_size = 1000000 # Full batch
-    num_epochs = 1000
+    batch_size: int = 1000000 # Full batch
+    num_epochs: int = 1000
 
     # adam
     adam_lr: float = 0.04065651701003823
@@ -118,7 +119,7 @@ class Params(metaclass=Singleton):
     CNN_dropout_rate_conv: float = 0.0
     CNN_loss_function: str = 'mse'  # 'mse', 'mae', 'mse_mae', 'smooth'
     CNN_gradient_clipping: bool = True
-    CNN_activation = 'gelu' # "relu", "leakyrelu", "elu", "selu", "silu", "gelu", "softplus"
+    CNN_activation: str = 'gelu' # "relu", "leakyrelu", "elu", "selu", "silu", "gelu", "softplus"
     CNN_patience: int = 500
     CNN_max_grad_norm: float = 1
     CNN_input_noise: float = 0.009949372596871502
