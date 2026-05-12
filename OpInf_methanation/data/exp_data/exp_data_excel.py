@@ -171,20 +171,21 @@ def save_data_for_opinf(inputs, temps_smooth, flow_smooth, temps_deriv, flow_der
 
     np.save(f"center_temperature_{file_id}.npy", temps_smooth.values.T)
     np.save(f"flow_rate_out_{file_id}.npy", flow_smooth.values.flatten())
-    np.save(f"cooling_temperature_{file_id}.npy", inputs['T_cool'].values)
-    np.save(f"inlet_temperature_{file_id}.npy", inputs['T_gas_in'].values)
+    np.save(f"cooling_temperature_{file_id}.npy", inputs['T_cool_setpoint'].values)
+    np.save(f"inlet_temperature_{file_id}.npy", inputs['T_gas_in_setpoint'].values)
     np.save(f"derivatives_center_temperature_{file_id}.npy", temps_deriv.values.T / dt)
     np.save(f"derivatives_flow_rate_out_{file_id}.npy", flow_deriv.values.flatten() / dt)
 
     # Legacy variables specifically for the dyn_var_T_var_F_exp block
     if file_id == "dyn_var_T_var_F_exp":
+        # + 20 is the setpoint value for Argon
         load = (inputs['F_H2_setpoint'].values + inputs['F_CO2_setpoint'].values + 20.0)
         np.save(f"load_{file_id}.npy", load)
 
-        np.save(f"load_F_H2_in_exp_{file_id}.npy", inputs['F_H2_in'].values)
-        np.save(f"load_F_CO2_in_exp_{file_id}.npy", inputs['F_CO2_in'].values)
-        np.save(f"load_T_gas_in_exp_{file_id}.npy", inputs['T_gas_in'].values)
-        np.save(f"load_T_cool_exp_{file_id}.npy", inputs['T_cool'].values)
+        np.save(f"load_F_H2_setpoint_exp_{file_id}.npy", inputs['F_H2_setpoint'].values)
+        np.save(f"load_F_CO2_setpoint_exp_{file_id}.npy", inputs['F_CO2_setpoint'].values)
+        np.save(f"load_T_gas_in_setpoint_exp_{file_id}.npy", inputs['T_gas_in_setpoint'].values)
+        np.save(f"load_T_cool_setpoint_exp_{file_id}.npy", inputs['T_cool_setpoint'].values)
 
     z_coords = np.array([float(c.split(':')[1]) for c in temps_smooth.columns])
     np.save(f"z_{file_id}.npy", z_coords)
