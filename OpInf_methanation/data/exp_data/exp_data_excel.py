@@ -166,32 +166,28 @@ def clean_values_and_constraints(df_inputs, df_conv):
 
 
 def save_data_for_opinf(inputs, temps_smooth, flow_smooth, temps_deriv, flow_deriv, file_id):
+    file_id = file_id.replace('.parquet', '')
+
     print(f"--- Saving Data for OpInf (ID: {file_id}) ---")
     dt = inputs['runtime_s'].iloc[1] - inputs['runtime_s'].iloc[0]
+    load = inputs['F_H2_in'].values + inputs['F_CO2_in'].values
+
+    z_cols = [c for c in temps_smooth.columns if c.startswith('z:')]
+    z_vals = np.array([float(c.split(':')[1]) for c in z_cols])
+
+    np.save(f"time_{file_id}.npy", inputs['runtime_s'].values)
+    np.save(f"z_{file_id}.npy", z_vals)
 
     np.save(f"center_temperature_{file_id}.npy", temps_smooth.values.T)
     np.save(f"flow_rate_out_{file_id}.npy", flow_smooth.values.flatten())
-    np.save(f"cooling_temperature_{file_id}.npy", inputs['T_cool_setpoint'].values)
-    np.save(f"inlet_temperature_{file_id}.npy", inputs['T_gas_in_setpoint'].values)
+    np.save(f"cooling_temperature_{file_id}.npy", inputs['T_cool'].values)
+    np.save(f"inlet_temperature_{file_id}.npy", inputs['T_gas_in'].values)
+    np.save(f"load_{file_id}.npy", load)
+
     np.save(f"derivatives_center_temperature_{file_id}.npy", temps_deriv.values.T / dt)
     np.save(f"derivatives_flow_rate_out_{file_id}.npy", flow_deriv.values.flatten() / dt)
 
-    # Legacy variables specifically for the dyn_var_T_var_F_exp block
-    if file_id == "dyn_var_T_var_F_exp":
-        # + 20 is the setpoint value for Argon
-        load = (inputs['F_H2_setpoint'].values + inputs['F_CO2_setpoint'].values + 20.0)
-        np.save(f"load_{file_id}.npy", load)
-
-        np.save(f"load_F_H2_setpoint_exp_{file_id}.npy", inputs['F_H2_setpoint'].values)
-        np.save(f"load_F_CO2_setpoint_exp_{file_id}.npy", inputs['F_CO2_setpoint'].values)
-        np.save(f"load_T_gas_in_setpoint_exp_{file_id}.npy", inputs['T_gas_in_setpoint'].values)
-        np.save(f"load_T_cool_setpoint_exp_{file_id}.npy", inputs['T_cool_setpoint'].values)
-
-    z_coords = np.array([float(c.split(':')[1]) for c in temps_smooth.columns])
-    np.save(f"z_{file_id}.npy", z_coords)
-    np.save(f"time_{file_id}.npy", inputs['runtime_s'].values)
-
-    print(f"Saved all files with suffix _{file_id}.npy\n")
+    print(f"Saved all files with suffix _{file_id}.npy")
 
 
 # --- Main Execution ---
