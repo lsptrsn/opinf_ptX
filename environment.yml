@@ -1,0 +1,15 @@
+name: opinf_ptx
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13.5
+  - pip
+  - pip:
+    - numpy==2.1.3
+    - scipy==1.15.3
+    - torch==2.8.0
+    - matplotlib==3.10.0
+    - scikit-learn==1.6.1
+    - optuna==4.6.0
+    - casadi==3.7.2
+    - dde-ivp==0.1.3

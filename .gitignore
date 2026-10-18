@@ -1,0 +1,25 @@
+# Data and generated output (data are published separately on EDMOND)
+data
+data/
+predictions/
+results/
+logs*/
+*.npz
+*.npy
+*.parquet
+*.pkl
+*.pt
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Optuna studies
+*.db
+*.sqlite3
+
+# OS and editors
+.DS_Store
+.vscode/
+.idea/
