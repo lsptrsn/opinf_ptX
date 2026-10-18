@@ -72,6 +72,39 @@ Other versions or builds of NumPy and SciPy change the integrated trajectories
 at the level of the solver tolerance (relative differences of order 1e-5 in our
 tests). Training itself is unaffected.
 
+## Optimal control
+
+The control study uses the three synthetic models of `run.py synthetic_control`
+(seeds 18, 10 and 15, refitted on all ten trajectories) as an ensemble. Its
+scenario (load profile, coolant profile and initial state) is part of the
+EDMOND data set and goes to `control/data/control_scenario_0/`.
+
+```
+cd identification
+python run.py synthetic_control
+cd ../control
+mkdir -p data
+cp -r ../identification/results/model_* data/
+```
+
+`run.py` writes one folder `model_<timestamp>` per seed, in the order 18, 10, 15.
+With these three folder names, the reported control run is
+
+```
+env OPINF_DEVICE=cpu OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 \
+    OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+    OCP_TAG=ensemble OCP_MODEL=<model seed 18> \
+    OCP_ENSEMBLE=<model seed 10>,<model seed 15> \
+    OCP_TRAIN_TRAJ=all OCP_STRATEGY=slp OCP_MAX_ITER=0 OCP_SLP_START=linear \
+    OCP_SLP_START_MARGIN=20 OCP_MARGIN_K=0 OCP_ENVELOPE=0.30 \
+    OCP_CONV_CAP=1.0 OCP_AGREE_Q=off \
+    python optimal_control_main.py
+```
+
+It solves the problem with the linear reconstruction of all three models, a
+temperature limit lowered by 20 K and the reduced states kept within 30 % of
+their training range. Results are written to `control/results/ensemble/`.
+
 ## Not included
 
 The mechanistic reactor model used for the plant-side verification of the

@@ -52,7 +52,7 @@ from config import PhysicalConstraints, OptimizationConfig, get_ipopt_options
 os.environ.setdefault("OPINF_DEVICE", "cpu")
 PIPELINE_DIR = Path(os.environ.get(
     "OPINF_PIPELINE_DIR",
-    "~/MPI/CEJ/code/Code_recent/04_OpInf/OpInf_methanation")).expanduser()
+    Path(__file__).resolve().parent.parent / "identification")).expanduser()
 # Appended, not inserted: the control code has its own utils package, which
 # must not be shadowed by anything in the pipeline folder.
 sys.path.append(str(PIPELINE_DIR))
