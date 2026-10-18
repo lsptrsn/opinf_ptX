@@ -17,7 +17,6 @@ identification/   model identification
   configs.py        settings of the final models
   run.py            trains the final models
   opinf_methanation_exp.py     identification and evaluation of one model
-  opinf_methanation_Optuna.py  hyperparameter search
 control/          optimal control with the identified model
 ```
 
@@ -50,6 +49,10 @@ python run.py case2 --seeds 10-19       # Case 2, one seed set
 python run.py synthetic                 # synthetic record
 python run.py synthetic_control         # models used in the control study
 ```
+
+The hyperparameters were selected by an Optuna search; the search space and
+the selected values are reported in the paper (Table C.1), and the values are
+set in `configs.py`. The search script is not included.
 
 Each seed runs in a fresh process with single-threaded numerics on the CPU.
 Forecasts are written to `predictions/<case>/`.
